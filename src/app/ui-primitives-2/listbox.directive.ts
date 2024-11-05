@@ -1,6 +1,7 @@
 import { computed, contentChildren, Directive, model } from '@angular/core';
+import { ListboxComposable } from '../composables-2/listbox';
+import { OptionComposable } from '../composables-2/option';
 import { Option } from './option.directive';
-import { getListboxProps } from '../composables/listbox/listbox';
 
 @Directive({
   selector: '[listbox]',
@@ -39,5 +40,9 @@ export class Listbox {
   children = contentChildren(Option);
   items = computed(() => this.children().map((c) => c.composable));
 
-  composable = getListboxProps(this);
+  composable: ListboxComposable<OptionComposable>;
+
+  constructor() {
+    this.composable = new ListboxComposable(this);
+  }
 }

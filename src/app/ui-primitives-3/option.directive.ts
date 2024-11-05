@@ -1,6 +1,6 @@
 import { Directive, effect, ElementRef, inject, model } from '@angular/core';
 import { Listbox } from './listbox.directive';
-import { getOptionProps } from '../composables/option/option';
+import { getOptionProps } from '../composables-3/option';
 
 @Directive({
   selector: '[option]',

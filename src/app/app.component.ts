@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { Listbox } from './ui-primitives/listbox.directive';
-import { Option } from './ui-primitives/option.directive';
+import { Listbox } from './ui-primitives-2/listbox.directive';
+import { Option } from './ui-primitives-2/option.directive';
 import { StatesService } from './states.service';
 import { FormsModule } from '@angular/forms';
 import { TitleCasePipe } from '@angular/common';

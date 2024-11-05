@@ -59,12 +59,12 @@ export class NavigationComposable<T extends Item> {
     this.currentIndex.set(this.lastIndex());
   }
 
-  private getPrevIndex(index: number): number {
+  private getPrevIndex = (index: number) => {
     const prevIndex = this.wrap() && index === 0 ? this.lastIndex() : index - 1;
     return Math.max(prevIndex, this.firstIndex());
   }
 
-  private getNextIndex(index: number): number {
+  private getNextIndex = (index: number) => {
     const nextIndex = this.wrap() && index === this.lastIndex() ? 0 : index + 1;
     return Math.min(nextIndex, this.lastIndex());
   }
