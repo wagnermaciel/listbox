@@ -1,7 +1,17 @@
 import { computed, Signal, signal, WritableSignal } from "@angular/core";
-import { NavigationInputs, NavigationItem, NavigationComposableInterface } from "./navigation.types";
 
-export class NavigationComposable<T extends NavigationItem> implements NavigationComposableInterface<T> {
+interface Item {
+  disabled: Signal<boolean>;
+}
+
+export interface NavigationInputs<T extends Item> {
+  wrap: Signal<boolean>;
+  items: Signal<T[]>;
+  skipDisabled: Signal<boolean>;
+  currentIndex: WritableSignal<number>;
+}
+
+export class NavigationComposable<T extends Item> {
   wrap: Signal<boolean>;
   items: Signal<T[]>;
   skipDisabled: Signal<boolean>;

@@ -1,7 +1,31 @@
-import { computed, signal } from '@angular/core';
-import { SelectionInputs, SelectionItem, SelectionProps } from './selection.types';
+import { computed, Signal, signal, WritableSignal } from '@angular/core';
 
-export function getSelectionProps<T extends SelectionItem>(args: SelectionInputs<T>): SelectionProps<T> {
+export interface Item {
+  disabled: Signal<boolean>;
+  selected: Signal<boolean>;
+}
+
+export interface SelectionInterface<T extends Item> {
+  items: Signal<T[]>;
+  selectedItems: Signal<T[]>;
+  followFocus: Signal<boolean>;
+  multiselectable: Signal<boolean>;
+  anchorIndex: WritableSignal<number>;
+  currentIndex: WritableSignal<number>;
+  selectedIndices: WritableSignal<number[]>;
+
+  toggle: () => void;
+  select: () => void;
+  deselect: () => void;
+  toggleAll: () => void;
+  selectAll: () => void;
+  deselectAll: () => void;
+  selectFromAnchor: () => void;
+}
+
+export type SelectionInputs<T extends Item> = Pick<SelectionInterface<T>, 'followFocus' | 'multiselectable' | 'items' | 'currentIndex' | 'selectedIndices'>;
+
+export function getSelectionProps<T extends Item>(args: SelectionInputs<T>): SelectionInterface<T> {
   const anchorIndex = signal(-1);
   const selectedItems = computed(() => args.selectedIndices().map((i) => args.items()[i]!));
 

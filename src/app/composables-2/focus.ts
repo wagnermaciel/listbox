@@ -1,7 +1,16 @@
 import { computed, Signal, WritableSignal } from "@angular/core";
-import { FocusItem, FocusInputs, FocusComposableInterface } from "./focus.types";
 
-export class FocusComposable<T extends FocusItem> implements FocusComposableInterface<T> {
+interface Item {
+  id: Signal<string>;
+}
+
+export interface FocusInputs<T extends Item> {
+  items: Signal<T[]>;
+  rovingFocus: Signal<boolean>;
+  currentIndex: WritableSignal<number>;
+}
+
+export class FocusComposable<T extends Item> {
   items: Signal<T[]>;
   rovingFocus: Signal<boolean>;
   currentIndex: WritableSignal<number>;

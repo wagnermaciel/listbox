@@ -1,13 +1,18 @@
 import { computed, Signal } from "@angular/core";
-import { OptionInputs, OptionComposableInterface } from "./option.types";
-import { ListboxComposableInterface } from "../listbox/listbox.types";
+import { ListboxComposable } from "./listbox";
+
+export interface OptionInputs {
+  disabled: Signal<boolean>;
+  searchTerm: Signal<string>;
+  listbox: ListboxComposable<OptionComposable>;
+}
 
 let counter = -1;
 
-export class OptionComposable implements OptionComposableInterface {
+export class OptionComposable {
   disabled: Signal<boolean>;
   searchTerm: Signal<string>;
-  listbox: ListboxComposableInterface<OptionComposableInterface>;
+  listbox: ListboxComposable<OptionComposable>;
 
   id = computed(() => `${counter++}`);
   setsize = computed(() => this.listbox.navigationManager.items().length);

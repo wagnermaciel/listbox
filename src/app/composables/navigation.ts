@@ -1,7 +1,28 @@
-import { computed, signal } from "@angular/core";
-import { NavigationInputs, NavigationItem, NavigationProps } from "./navigation.types";
+import { computed, Signal, signal, WritableSignal } from "@angular/core";
 
-export function getNavigationProps<T extends NavigationItem>(args: NavigationInputs<T>): NavigationProps<T> {
+export interface Item {
+  disabled: Signal<boolean>;
+}
+
+export interface NavigationInterface<T extends Item> {
+  wrap: Signal<boolean>;
+  items: Signal<T[]>;
+  skipDisabled: Signal<boolean>;
+  currentItem: Signal<T | undefined>;
+  currentIndex: WritableSignal<number>;
+  firstIndex: Signal<number>;
+  lastIndex: Signal<number>;
+
+  navigateTo: (i: number) => void;
+  navigatePrev: () => void;
+  navigateNext: () => void;
+  navigateFirst: () => void;
+  navigateLast: () => void;
+}
+
+export type NavigationInputs<T extends Item> = Pick<NavigationInterface<T>, 'items' | 'wrap' | 'skipDisabled' | 'currentIndex'>;
+
+export function getNavigationProps<T extends Item>(args: NavigationInputs<T>): NavigationInterface<T> {
   const currentItem = computed(() => args.items()[args.currentIndex()]);
 
   const firstIndex = computed(() => {

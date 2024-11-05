@@ -1,7 +1,17 @@
 import { Signal, signal, WritableSignal } from "@angular/core";
-import { TypeAheadInputs, TypeAheadItem, TypeAheadComposableInterface } from "./typeahead.types";
 
-export class TypeAheadComposable<T extends TypeAheadItem> implements TypeAheadComposableInterface<T> {
+export interface Item {
+  searchTerm: Signal<string>;
+}
+
+export interface TypeAheadInputs<T extends Item> {
+  items: Signal<T[]>;
+  delay: Signal<number>;
+  matcher: Signal<RegExp>;
+  currentIndex: WritableSignal<number>;
+}
+
+export class TypeAheadComposable<T extends Item> {
   items: Signal<T[]>;
   delay: Signal<number>;
   matcher: Signal<RegExp>;

@@ -1,7 +1,19 @@
 import { computed, Signal, signal, WritableSignal } from '@angular/core';
-import { SelectionInputs, SelectionItem, SelectionComposableInterface } from './selection.types';
 
-export class SelectionComposable<T extends SelectionItem> implements SelectionComposableInterface<T> {
+interface Item {
+  disabled: Signal<boolean>;
+  selected: Signal<boolean>;
+}
+
+export interface SelectionInputs<T extends Item> {
+  items: Signal<T[]>;
+  followFocus: Signal<boolean>;
+  multiselectable: Signal<boolean>;
+  currentIndex: WritableSignal<number>;
+  selectedIndices: WritableSignal<number[]>;
+}
+
+export class SelectionComposable<T extends Item> {
   items: Signal<T[]>;
   followFocus: Signal<boolean>;
   multiselectable: Signal<boolean>;

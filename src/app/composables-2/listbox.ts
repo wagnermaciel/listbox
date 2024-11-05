@@ -1,18 +1,24 @@
-import { NavigationComposable } from '../navigation/navigation';
-import { SelectionComposable } from '../selection/selection';
-import { FocusComposable } from '../focus/focus';
+import { NavigationComposable, NavigationInputs } from './navigation';
+import { SelectionComposable, SelectionInputs } from './selection';
+import { FocusComposable, FocusInputs } from './focus';
 import { computed, Signal } from '@angular/core';
-import { TypeAheadComposable } from '../typeahead/typeahead';
-import { OptionComposable } from '../option/option';
-import { ListboxInputs, ListboxComposableInterface } from './listbox.types';
+import { TypeAheadComposable, TypeAheadInputs } from './typeahead';
+import { OptionComposable } from './option';
 
-export class ListboxComposable<T extends OptionComposable> implements ListboxComposableInterface<T> {
+export type ListboxInputs<T extends OptionComposable> = {
+  vertical: Signal<boolean>;
+} & NavigationInputs<T> &
+  TypeAheadInputs<T> &
+  SelectionInputs<T> &
+  FocusInputs<T>;
+
+export class ListboxComposable<T extends OptionComposable> {
   focusManager: FocusComposable<T>;
   typeaheadManager: TypeAheadComposable<T>;
   selectionManager: SelectionComposable<T>;
   navigationManager: NavigationComposable<T>;
 
-  orientation = computed(() => this.vertical() ? 'vertical' : 'horizontal');
+  orientation = computed(() => (this.vertical() ? 'vertical' : 'horizontal'));
 
   tabindex: Signal<number>;
   vertical: Signal<boolean>;
@@ -39,11 +45,11 @@ export class ListboxComposable<T extends OptionComposable> implements ListboxCom
       this.handleSingleSelection(event);
     }
   }
-  
+
   handleNavigation(event: KeyboardEvent) {
     const upOrLeft = this.vertical() ? 'ArrowUp' : 'ArrowLeft';
     const downOrRight = this.vertical() ? 'ArrowDown' : 'ArrowRight';
-  
+
     if (
       event.key === ' ' ||
       event.key === downOrRight ||
@@ -51,7 +57,7 @@ export class ListboxComposable<T extends OptionComposable> implements ListboxCom
     ) {
       event.preventDefault();
     }
-  
+
     switch (event.key) {
       case downOrRight:
         this.navigationManager.navigateNext();
@@ -66,39 +72,39 @@ export class ListboxComposable<T extends OptionComposable> implements ListboxCom
         this.navigationManager.navigateLast();
         break;
     }
-  
+
     this.typeaheadManager.search(event.key);
   }
-  
+
   handleSingleSelection(event: KeyboardEvent) {
     if (this.selectionManager.followFocus()) {
       this.selectionManager.select();
       return;
     }
-  
+
     if (event.key === ' ') {
       this.selectionManager.toggle();
     }
   }
-  
+
   handleMultiSelection(event: KeyboardEvent) {
     const upOrLeft = this.vertical() ? 'ArrowUp' : 'ArrowLeft';
     const downOrRight = this.vertical() ? 'ArrowDown' : 'ArrowRight';
-  
+
     if (event.ctrlKey) {
       if (event.key === 'a') {
         this.selectionManager.toggleAll();
         return;
       }
     }
-  
+
     if (event.ctrlKey && event.shiftKey) {
       if (event.key === 'Home' || event.key === 'End') {
         this.selectionManager.selectFromAnchor();
         return;
       }
     }
-  
+
     if (event.shiftKey) {
       if (event.key === ' ') {
         this.selectionManager.selectFromAnchor();
@@ -108,7 +114,7 @@ export class ListboxComposable<T extends OptionComposable> implements ListboxCom
         return;
       }
     }
-  
+
     if (event.key === ' ') {
       this.selectionManager.toggle();
     }
@@ -117,11 +123,15 @@ export class ListboxComposable<T extends OptionComposable> implements ListboxCom
   onPointerDown(event: PointerEvent) {
     if (event.target instanceof HTMLElement) {
       const li = event.target.closest('li');
-  
+
       if (li) {
-        const index = this.navigationManager.items().findIndex(i => i.id() === li.id);
+        const index = this.navigationManager
+          .items()
+          .findIndex((i) => i.id() === li.id);
         this.navigationManager.navigateTo(index);
-        this.selectionManager.multiselectable() ? this.selectionManager.toggle() : this.selectionManager.select();
+        this.selectionManager.multiselectable()
+          ? this.selectionManager.toggle()
+          : this.selectionManager.select();
       }
     }
   }

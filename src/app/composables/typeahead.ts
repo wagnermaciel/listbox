@@ -1,7 +1,21 @@
-import { signal } from "@angular/core";
-import { TypeAheadInputs, TypeAheadItem, TypeAheadProps } from "./typeahead.types";
+import { Signal, signal, WritableSignal } from "@angular/core";
 
-export function getTypeAheadProps<T extends TypeAheadItem>(args: TypeAheadInputs<T>): TypeAheadProps<T> {
+export interface Item {
+  searchTerm: Signal<string>;
+}
+
+export interface TypeAheadInterface<T extends Item> {
+  items: Signal<T[]>;
+  delay: Signal<number>;
+  query: Signal<string>;
+  matcher: Signal<RegExp>;
+  currentIndex: WritableSignal<number>;
+  search: (c: string) => void;
+}
+
+export type TypeAheadInputs<T extends Item> = Pick<TypeAheadInterface<T>, 'items' | 'currentIndex' | 'delay' | 'matcher'>;
+
+export function getTypeAheadProps<T extends Item>(args: TypeAheadInputs<T>): TypeAheadInterface<T> {
   let timeout: any;
   const query = signal('');
 
