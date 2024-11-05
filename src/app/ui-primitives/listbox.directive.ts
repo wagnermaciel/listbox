@@ -1,20 +1,20 @@
 import { computed, contentChildren, Directive, model } from '@angular/core';
-import { getListboxProps } from '../../composables/listbox/listbox';
-import { Option } from '../option/option.directive';
+import { Option } from './option.directive';
+import { getListboxProps } from '../composables/listbox/listbox';
 
 @Directive({
   selector: '[listbox]',
   exportAs: 'listbox',
   standalone: true,
   host: {
-    'role': 'listbox',
-    '[attr.tabindex]': 'props.tabindex()',
-    '[attr.aria-orientation]': 'props.orientation()',
-    '[attr.aria-multiselectable]': 'props.multiselectable()',
-    '[attr.aria-activedescendant]': 'props.activedescendant()',
-    '(keydown)': 'props.onKeyDown($event)',
-    '(pointerdown)': 'props.onPointerDown($event)',
-  }
+    role: 'listbox',
+    '[attr.tabindex]': 'composable.tabindex()',
+    '[attr.aria-orientation]': 'composable.orientation()',
+    '[attr.aria-multiselectable]': 'composable.multiselectable()',
+    '[attr.aria-activedescendant]': 'composable.activedescendant()',
+    '(keydown)': 'composable.onKeyDown($event)',
+    '(pointerdown)': 'composable.onPointerDown($event)',
+  },
 })
 export class Listbox {
   wrap = model.required<boolean>();
@@ -37,7 +37,7 @@ export class Listbox {
   selectedIndices = model.required<number[]>();
 
   children = contentChildren(Option);
-  items = computed(() => this.children().map(c => c.props));
+  items = computed(() => this.children().map((c) => c.composable));
 
-  props = getListboxProps(this);
+  composable = getListboxProps(this);
 }
