@@ -39,8 +39,8 @@ export class ListboxState<T extends OptionState> {
 
     this.focusManager = new FocusState(inputs);
     this.typeaheadManager = new TypeaheadState(inputs);
-    this.selectionManager = new SelectionState(inputs);
     this.navigationManager = new NavigationState(inputs);
+    this.selectionManager = new SelectionState(inputs);
 
     this.orientation = inputs.orientation;
     this.tabindex = this.focusManager.tabindex;
