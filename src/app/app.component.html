@@ -3,7 +3,7 @@
     listbox
     #listbox="listbox"
     [wrap]="wrap"
-    [vertical]="vertical"
+    [orientation]="vertical ? 'vertical' : 'horizontal'"
     [rovingFocus]="rovingFocus"
     [followFocus]="followFocus"
     [skipDisabled]="skipDisabled"
@@ -20,14 +20,14 @@
     </li>
     }
   </ul>
-  @if (listbox.composable.typeaheadManager.query()) {
-    <span class="typeahead">{{ listbox.composable.typeaheadManager.query() | titlecase }}</span>
+  @if (listbox.state.query()) {
+  <span class="typeahead">{{ listbox.state.query() | titlecase }}</span>
   }
 </div>
 
 <div class="hud">
   <div>
-    <span>Typeahead: {{ listbox.composable.typeaheadManager.query() }}</span>
+    <span>Typeahead: {{ listbox.state.query() }}</span>
   </div>
   <div>
     <label for="wrap-input">Wrap: </label>
@@ -51,24 +51,42 @@
 
   <div>
     <label for="skip-disabled-input">Skip Disabled Options: </label>
-    <input id="skip-disabled-input" type="checkbox" [(ngModel)]="skipDisabled" />
+    <input
+      id="skip-disabled-input"
+      type="checkbox"
+      [(ngModel)]="skipDisabled"
+    />
   </div>
 
   <div>
     <label for="multiselectable-input">Multiselectable: </label>
-    <input id="multiselectable-input" type="checkbox" [(ngModel)]="multiselectable" />
+    <input
+      id="multiselectable-input"
+      type="checkbox"
+      [(ngModel)]="multiselectable"
+    />
   </div>
 
   <div>
     <label for="current-index-input">Current Index: </label>
-    <input id="current-index-input" type="number" min="0" [max]="states.length - 1" [(ngModel)]="currentIndex" />
+    <input
+      id="current-index-input"
+      type="number"
+      min="0"
+      [max]="states.length - 1"
+      [(ngModel)]="currentIndex"
+    />
   </div>
 
   <div>
     <label for="selected-indices-input">Selected Indices: </label>
-    <select id="selected-indices-input" [(ngModel)]="selectedIndices" [multiple]="multiselectable">
+    <select
+      id="selected-indices-input"
+      [(ngModel)]="selectedIndices"
+      [multiple]="multiselectable"
+    >
       @for (state of states; track state) {
-      <option [value]="$index">{{state}}</option>
+      <option [value]="$index">{{ state }}</option>
       }
     </select>
   </div>
