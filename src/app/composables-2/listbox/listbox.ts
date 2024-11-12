@@ -49,6 +49,7 @@ export class ListboxState<T extends OptionState> {
   }
 
   async load() {
+    this.getController();
     this.typeaheadState.getController();
     this.selectionState.getController();
     this.navigationState.getController();
