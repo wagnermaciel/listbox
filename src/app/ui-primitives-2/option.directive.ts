@@ -1,6 +1,6 @@
 import { Directive, effect, ElementRef, inject, model } from '@angular/core';
 import { Listbox } from './listbox.directive';
-import { OptionComposable } from '../composables-2/option';
+import { OptionState } from '../composables-2/option/option';
 
 @Directive({
   selector: '[option]',
@@ -24,10 +24,10 @@ export class Option {
   listbox = inject(Listbox).composable;
 
   hostEl = inject(ElementRef).nativeElement;
-  composable: OptionComposable;
+  composable: OptionState;
 
   constructor() {
-    this.composable = new OptionComposable(this);
+    this.composable = new OptionState(this);
     effect(() => {
       if (this.composable.focused()) {
         this.hostEl.focus();

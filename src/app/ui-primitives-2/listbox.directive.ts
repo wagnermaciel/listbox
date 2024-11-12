@@ -1,6 +1,6 @@
 import { computed, contentChildren, Directive, model } from '@angular/core';
-import { ListboxComposable } from '../composables-2/listbox';
-import { OptionComposable } from '../composables-2/option';
+import { ListboxState } from '../composables-2/listbox/listbox';
+import { OptionState } from '../composables-2/option/option';
 import { Option } from './option.directive';
 
 @Directive({
@@ -13,6 +13,8 @@ import { Option } from './option.directive';
     '[attr.aria-orientation]': 'composable.orientation()',
     '[attr.aria-multiselectable]': 'composable.multiselectable()',
     '[attr.aria-activedescendant]': 'composable.activedescendant()',
+    '(focus)': 'composable.load()',
+    '(mouseenter)': 'composable.load()',
     '(keydown)': 'composable.onKeyDown($event)',
     '(pointerdown)': 'composable.onPointerDown($event)',
   },
@@ -40,9 +42,9 @@ export class Listbox {
   children = contentChildren(Option);
   items = computed(() => this.children().map((c) => c.composable));
 
-  composable: ListboxComposable<OptionComposable>;
+  composable: ListboxState<OptionState>;
 
   constructor() {
-    this.composable = new ListboxComposable(this);
+    this.composable = new ListboxState(this);
   }
 }

@@ -10,7 +10,7 @@ export interface FocusInputs<T extends Item> {
   currentIndex: WritableSignal<number>;
 }
 
-export class FocusComposable<T extends Item> {
+export class FocusState<T extends Item> {
   items: Signal<T[]>;
   rovingFocus: Signal<boolean>;
   currentIndex: WritableSignal<number>;

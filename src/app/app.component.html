@@ -3,7 +3,7 @@
     listbox
     #listbox="listbox"
     [wrap]="wrap"
-    [orientation]="vertical ? 'vertical' : 'horizontal'"
+    [vertical]="vertical"
     [rovingFocus]="rovingFocus"
     [followFocus]="followFocus"
     [skipDisabled]="skipDisabled"
@@ -20,14 +20,14 @@
     </li>
     }
   </ul>
-  @if (listbox.state.query()) {
-  <span class="typeahead">{{ listbox.state.query() | titlecase }}</span>
+  @if (listbox.composable.typeaheadState.query()) {
+  <span class="typeahead">{{ listbox.composable.typeaheadState.query() | titlecase }}</span>
   }
 </div>
 
 <div class="hud">
   <div>
-    <span>Typeahead: {{ listbox.state.query() }}</span>
+    <span>Typeahead: {{ listbox.composable.typeaheadState.query() }}</span>
   </div>
   <div>
     <label for="wrap-input">Wrap: </label>

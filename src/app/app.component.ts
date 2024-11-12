@@ -2,8 +2,8 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StatesService } from './states.service';
-import { Listbox } from './ui-primitives-dispatcher/listbox.directive';
-import { Option } from './ui-primitives-dispatcher/option.directive';
+import { Listbox } from './ui-primitives-2/listbox.directive';
+import { Option } from './ui-primitives-2/option.directive';
 
 @Component({
   selector: 'app-root',
