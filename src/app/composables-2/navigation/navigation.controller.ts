@@ -37,14 +37,17 @@ export class NavigationController<T extends Item> {
   }
 
   private navigate(navigateFn: (i: number) => number): void {
-    const index = signal(this.state.currentIndex());
-    const isLoop = computed(() => index() === this.state.currentIndex());
-    const shouldSkip = computed(() => this.state.skipDisabled() && this.state.items()[index()]?.disabled());
-  
+    const prevIndex = signal(this.state.currentIndex());
+    const nextIndex = signal(this.state.currentIndex());
+    const isRepeat = computed(() => !this.state.wrap() && nextIndex() === prevIndex());
+    const isLoop = computed(() => this.state.wrap() && nextIndex() === this.state.currentIndex());
+    const shouldSkip = computed(() => this.state.skipDisabled() && this.state.items()[nextIndex()]?.disabled());
+
     do {
-      index.update(navigateFn);
-    } while (shouldSkip() && !isLoop());
+      prevIndex.set(nextIndex());
+      nextIndex.update(navigateFn);
+    } while (shouldSkip() && !isLoop() && !isRepeat());
   
-    this.state.currentIndex.set(index());
+    this.state.currentIndex.set(nextIndex());
   }
 }

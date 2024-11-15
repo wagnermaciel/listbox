@@ -13,7 +13,7 @@ import { Option } from './option.directive';
     '[attr.aria-orientation]': 'composable.orientation()',
     '[attr.aria-multiselectable]': 'composable.multiselectable()',
     '[attr.aria-activedescendant]': 'composable.activedescendant()',
-    '(focus)': 'composable.load()',
+    '(focusin)': 'composable.load()',
     '(mouseenter)': 'composable.load()',
     '(keydown)': 'composable.onKeyDown($event)',
     '(pointerdown)': 'composable.onPointerDown($event)',

@@ -37,6 +37,6 @@ export class Option {
           block: 'nearest',
         });
       }
-    })
+    });
   }
 }

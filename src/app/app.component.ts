@@ -1,19 +1,18 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { StatesService } from './states.service';
-import { Listbox } from './ui-primitives-2/listbox.directive';
-import { Option } from './ui-primitives-2/option.directive';
+import { Grid } from './ui-primitives-2/grid.directive';
+import { Row } from './ui-primitives-2/row.directive';
+import { GridCell } from './ui-primitives-2/gridcell.directive';
+import { Widget } from './ui-primitives-2/widget.directive';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, Listbox, Option, TitleCasePipe],
+  imports: [Grid, Row, GridCell, Widget],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'ui-primitives';
   service = inject(StatesService);
   states = this.service.getStates();
 
