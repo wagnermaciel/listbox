@@ -1,11 +1,10 @@
 import { Directive, effect, ElementRef, inject, model } from '@angular/core';
-import { WidgetState } from '../composables-2/grid/widget';
+import { WidgetState } from '../../primitives/composables/grid/widget';
 import { Grid } from './grid.directive';
 import { GridCell } from './gridcell.directive';
 
 @Directive({
   selector: '[widget]',
-  standalone: true,
   host: {
     '[attr.id]': 'state.id()',
     '[attr.aria-disabled]': 'state.disabled()',

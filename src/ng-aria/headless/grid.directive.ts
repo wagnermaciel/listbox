@@ -1,11 +1,10 @@
 import { computed, contentChildren, Directive, model } from '@angular/core';
-import { GridState, RowCol } from '../composables-2/grid/grid';
+import { GridState, RowCol } from '../../primitives/composables/grid/grid';
 import { Row } from './row.directive';
 
 @Directive({
   selector: '[grid]',
   exportAs: 'grid',
-  standalone: true,
   host: {
     role: 'grid',
     '[attr.aria-rowcount]': 'state.rowcount()',
@@ -23,7 +22,7 @@ export class Grid {
 
   state: GridState;
   rows = contentChildren(Row, { descendants: true });
-  cells = computed(() => this.rows().map(row => row.gridcells()));
+  cells = computed(() => this.rows().map((row) => row.gridcells()));
 
   constructor() {
     this.state = new GridState(this);

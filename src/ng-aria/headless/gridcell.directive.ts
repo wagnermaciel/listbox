@@ -7,14 +7,13 @@ import {
   inject,
   model,
 } from '@angular/core';
-import { GridCellState } from '../composables-2/grid/gridcell';
-import { Widget } from './widget.directive';
+import { GridCellState } from '../../primitives/composables/grid/gridcell';
 import { Grid } from './grid.directive';
+import { Widget } from './widget.directive';
 
 @Directive({
   selector: '[gridcell]',
   exportAs: 'gridcell',
-  standalone: true,
   host: {
     role: 'gridcell',
     '[attr.id]': 'state.id()',
