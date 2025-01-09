@@ -5,7 +5,6 @@ import { Listbox } from './listbox.directive';
 @Directive({
   selector: '[option]',
   exportAs: 'option',
-  standalone: true,
   host: {
     role: 'option',
     '[attr.id]': 'composable.id()',

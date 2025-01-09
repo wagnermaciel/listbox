@@ -6,11 +6,10 @@ import { Widget } from '../../ng-aria/headless/widget.directive';
 import { StatesService } from '../states.service';
 
 @Component({
-  selector: 'grid-demo',
-  standalone: true,
-  imports: [Grid, Row, GridCell, Widget],
-  templateUrl: 'grid-demo.html',
-  styleUrl: 'grid-demo.css',
+    selector: 'grid-demo',
+    imports: [Grid, Row, GridCell, Widget],
+    templateUrl: 'grid-demo.html',
+    styleUrl: 'grid-demo.css'
 })
 export default class GridDemo {
   service = inject(StatesService);

@@ -12,12 +12,11 @@ import { DemoControls } from '../demo-controls/demo-controls';
 let nextId = 10;
 
 @Component({
-  selector: 'listbox-demo',
-  standalone: true,
-  templateUrl: 'listbox-demo.html',
-  styleUrl: 'listbox-demo.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Listbox, Option, DemoControls],
+    selector: 'listbox-demo',
+    templateUrl: 'listbox-demo.html',
+    styleUrl: 'listbox-demo.css',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [Listbox, Option, DemoControls]
 })
 export default class ListboxDemo {
   items = signal(Array.from({ length: nextId }, (_, i) => i));

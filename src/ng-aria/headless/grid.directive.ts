@@ -5,7 +5,6 @@ import { Row } from './row.directive';
 @Directive({
   selector: '[grid]',
   exportAs: 'grid',
-  standalone: true,
   host: {
     role: 'grid',
     '[attr.aria-rowcount]': 'state.rowcount()',

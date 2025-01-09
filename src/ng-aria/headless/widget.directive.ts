@@ -5,7 +5,6 @@ import { GridCell } from './gridcell.directive';
 
 @Directive({
   selector: '[widget]',
-  standalone: true,
   host: {
     '[attr.id]': 'state.id()',
     '[attr.aria-disabled]': 'state.disabled()',

@@ -14,7 +14,6 @@ import { Widget } from './widget.directive';
 @Directive({
   selector: '[gridcell]',
   exportAs: 'gridcell',
-  standalone: true,
   host: {
     role: 'gridcell',
     '[attr.id]': 'state.id()',

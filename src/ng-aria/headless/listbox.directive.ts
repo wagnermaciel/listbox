@@ -6,7 +6,6 @@ import { Option } from './option.directive';
 @Directive({
   selector: '[listbox]',
   exportAs: 'listbox',
-  standalone: true,
   host: {
     role: 'listbox',
     '[attr.tabindex]': 'composable.tabindex()',

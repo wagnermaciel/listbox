@@ -3,7 +3,7 @@
   margin: 4px;
 }
 
-[listboxOption] {
+[option] {
   display: grid;
   grid-template-columns: 30px auto;
   padding: 0 4px;
@@ -25,7 +25,7 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-[listboxOption][disabled] {
+[option][disabled] {
   opacity: 0.5;
 }
 

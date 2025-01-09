@@ -12,7 +12,6 @@ interface Command {
 
 @Component({
   selector: 'demo-controls',
-  standalone: true,
   templateUrl: './demo-controls.html',
   styleUrls: ['./demo-controls.css'],
   host: {
