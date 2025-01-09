@@ -1,0 +1,27 @@
+<demo-controls [commands]="commands"></demo-controls>
+<ul
+  listbox
+  [skipDisabled]="false"
+  [vertical]="orientation() === 'vertical'"
+  [rovingFocus]="focusStrategy() === 'rovingtabindex'"
+  [multiselectable]="selectionType() === 'multiple'"
+  [followFocus]="selectionStrategy() === 'followfocus'"
+  [wrap]="wrapNavigation()"
+  [typeaheadDelay]="500"
+  [typeaheadMatcher]="typeaheadMatcher()"
+  [(currentIndex)]="currentIndex"
+  [selectedIndices]="[]"
+  [class.command-target]="commandTarget() === 'l'"
+>
+  @for (item of items(); track item) {
+    <li
+      option
+      [disabled]="disabledItems().has(item)"
+      [searchTerm]="'item' + item"
+      [value]="$index"
+      [class.command-target]="commandTarget() === $index"
+    >
+      <span class="index">{{ $index }}:</span> item #{{ item }}
+    </li>
+  }
+</ul>
