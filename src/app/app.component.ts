@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
+import { Grid } from '../ng-aria/headless/grid.directive';
+import { GridCell } from '../ng-aria/headless/gridcell.directive';
+import { Row } from '../ng-aria/headless/row.directive';
+import { Widget } from '../ng-aria/headless/widget.directive';
 import { StatesService } from './states.service';
-import { Grid } from './ui-primitives-2/grid.directive';
-import { Row } from './ui-primitives-2/row.directive';
-import { GridCell } from './ui-primitives-2/gridcell.directive';
-import { Widget } from './ui-primitives-2/widget.directive';
 
 @Component({
   selector: 'app-root',
