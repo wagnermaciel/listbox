@@ -5,40 +5,42 @@ export class SelectionController<T extends Item> {
 
   select() {
     this.state.anchorIndex.set(this.state.currentIndex());
-    if (this.state.multiselectable()) {
-      this.state.selectedIndices.update((arr) =>
-        arr.concat([this.state.currentIndex()])
-      );
-    } else {
-      this.state.selectedIndices.set([this.state.currentIndex()]);
+    const item = this.state.items().at(this.state.currentIndex());
+
+    if (!this.state.multiselectable()) {
+      this.deselectAll();
     }
+
+    item?.selected.set(true);
   }
 
   deselect() {
-    this.state.selectedIndices.update((arr) =>
-      arr.filter((i) => i !== this.state.currentIndex())
-    );
+    const item = this.state.items().at(this.state.currentIndex());
+    item?.selected.set(false);
   }
 
   toggle() {
-    this.state.selectedIndices().includes(this.state.currentIndex())
-      ? this.deselect()
-      : this.select();
+    const item = this.state.items().at(this.state.currentIndex());
+    item?.selected() ? this.deselect() : this.select();
   }
 
   selectAll() {
-    this.state.selectedIndices.set(this.state.items().map((v, i) => i));
+    for (const item of this.state.items()) {
+      item.selected.set(true);
+    }
   }
 
   deselectAll() {
-    this.state.selectedIndices.set([]);
+    for (const item of this.state.items()) {
+      item.selected.set(false);
+    }
   }
 
   toggleAll() {
-    if (this.state.selectedIndices().length === this.state.items().length) {
-      this.deselectAll();
-    } else {
+    if (this.state.items().some(item => !item.selected())) {
       this.selectAll();
+    } else {
+      this.deselectAll();
     }
   }
 
@@ -49,10 +51,9 @@ export class SelectionController<T extends Item> {
 
     const upper = Math.max(this.state.currentIndex(), this.state.anchorIndex());
     const lower = Math.min(this.state.currentIndex(), this.state.anchorIndex());
-    const range = Array.from(
-      { length: upper - lower + 1 },
-      (_, i) => lower + i
-    );
-    this.state.selectedIndices.update((arr) => arr.concat(range));
+
+    for (let i = lower; i <= upper; i++) {
+      this.state.items().at(i)?.selected.set(true);
+    }
   }
 }

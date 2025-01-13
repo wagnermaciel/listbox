@@ -3,7 +3,7 @@ import type { SelectionController } from './selection.controller';
 
 export interface Item {
   disabled: Signal<boolean>;
-  selected: Signal<boolean>;
+  selected: WritableSignal<boolean>;
 }
 
 export interface SelectionInputs<T extends Item> {
@@ -11,7 +11,6 @@ export interface SelectionInputs<T extends Item> {
   followFocus: Signal<boolean>;
   multiselectable: Signal<boolean>;
   currentIndex: WritableSignal<number>;
-  selectedIndices: WritableSignal<number[]>;
 }
 
 export class SelectionState<T extends Item> {
@@ -19,12 +18,9 @@ export class SelectionState<T extends Item> {
   followFocus: Signal<boolean>;
   multiselectable: Signal<boolean>;
   currentIndex: WritableSignal<number>;
-  selectedIndices: WritableSignal<number[]>;
 
   anchorIndex = signal(-1);
-  selectedItems = computed(() =>
-    this.selectedIndices().map((i) => this.items()[i]!)
-  );
+  selectedItems = computed(() => this.items().filter((i) => i.selected()));
 
   private controller: SelectionController<T> | null = null;
 
@@ -33,7 +29,6 @@ export class SelectionState<T extends Item> {
     this.followFocus = args.followFocus;
     this.multiselectable = args.multiselectable;
     this.currentIndex = args.currentIndex;
-    this.selectedIndices = args.selectedIndices;
   }
 
   async getController() {

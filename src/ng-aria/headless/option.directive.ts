@@ -19,6 +19,7 @@ import { Listbox } from './listbox.directive';
 })
 export class Option {
   searchTerm = model.required<string>();
+  selected = model<boolean>(false);
   disabled = model<boolean>(false);
   listbox = inject(Listbox).composable;
 
