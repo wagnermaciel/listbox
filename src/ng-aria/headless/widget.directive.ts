@@ -13,14 +13,14 @@ import { GridCell } from './gridcell.directive';
   },
 })
 export class Widget {
-  state: WidgetState;
-  grid = inject(Grid).state;
-  cell = inject(GridCell).state;
-  hostEl = inject(ElementRef).nativeElement;
+  readonly state: WidgetState;
+  readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  readonly grid = inject(Grid).state;
+  readonly cell = inject(GridCell).state;
 
-  disabled = model<boolean>(false);
-  editable = model<boolean>(false);
-  usesArrowKeys = model<boolean>(false);
+  readonly disabled = model<boolean>(false);
+  readonly editable = model<boolean>(false);
+  readonly usesArrowKeys = model<boolean>(false);
 
   constructor() {
     let isInitialLoad = true;
@@ -28,11 +28,11 @@ export class Widget {
 
     effect(() => {
       if (this.state.focused() && !isInitialLoad) {
-        this.hostEl.focus();
+        this.element.focus();
       }
 
       if (this.state.active() && !isInitialLoad) {
-        this.hostEl.scrollIntoView({
+        this.element.scrollIntoView({
           block: 'nearest',
         });
       }

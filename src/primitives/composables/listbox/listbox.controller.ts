@@ -1,8 +1,13 @@
-import { OptionState } from "../option/option";
-import { ListboxState } from "./listbox";
+import { FocusController } from '../focus/focus.controller';
+import { OptionState } from '../option/option';
+import { ListboxState } from './listbox';
 
 export class ListboxController<T extends OptionState> {
-  constructor(readonly state: ListboxState<T>) {}
+  private readonly focusController: FocusController;
+
+  constructor(readonly state: ListboxState<T>) {
+    this.focusController = new FocusController(state.focusState);
+  }
 
   onKeyDown(event: KeyboardEvent) {
     this.handleNavigation(event);
@@ -11,6 +16,10 @@ export class ListboxController<T extends OptionState> {
     } else {
       this.handleSingleSelection(event);
     }
+  }
+
+  onFocusout(event: FocusEvent) {
+    this.focusController.handlers.focusout(event);
   }
 
   handleNavigation(event: KeyboardEvent) {

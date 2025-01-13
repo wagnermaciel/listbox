@@ -28,29 +28,29 @@ import { Widget } from './widget.directive';
   },
 })
 export class GridCell {
-  wrap = model<boolean>(true);
-  rowspan = model<number>(1);
-  colspan = model<number>(1);
-  disabled = model<boolean>(false);
-  widgetIndex = model<number>(-1);
+  readonly wrap = model<boolean>(true);
+  readonly rowspan = model<number>(1);
+  readonly colspan = model<number>(1);
+  readonly disabled = model<boolean>(false);
+  readonly widgetIndex = model<number>(-1);
 
-  state: GridCellState;
-  grid = inject(Grid).state;
-  hostEl = inject(ElementRef).nativeElement;
+  readonly state: GridCellState;
+  readonly grid = inject(Grid).state;
+  readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
 
-  children = contentChildren(Widget, { descendants: true });
-  widgets = computed(() => this.children().map((c) => c.state));
+  readonly children = contentChildren(Widget, { descendants: true });
+  readonly widgets = computed(() => this.children().map((c) => c.state));
 
   constructor() {
     this.state = new GridCellState(this);
 
     effect(() => {
       if (this.state.focused()) {
-        this.hostEl.focus();
+        this.element.focus();
       }
 
       if (this.state.active()) {
-        this.hostEl.scrollIntoView({
+        this.element.scrollIntoView({
           block: 'nearest',
         });
       }

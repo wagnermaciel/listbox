@@ -1,42 +1,45 @@
 import { computed, Signal, WritableSignal } from '@angular/core';
-import { WidgetState } from './widget';
-import { GridState, RowCol } from './grid';
+import { FocusState } from '../focus/focus.state';
 import { NavigationState } from '../navigation/navigation';
-import { FocusState } from '../focus/focus';
+import { GridState, RowCol } from './grid';
+import { WidgetState } from './widget';
 
 export interface GridCellInputs {
-  grid: GridState;
-  wrap: Signal<boolean>;
-  rowspan: Signal<number>;
-  colspan: Signal<number>;
-  disabled: Signal<boolean>;
-  widgets: Signal<WidgetState[]>;
-  widgetIndex: WritableSignal<number>;
+  readonly element: HTMLElement;
+  readonly grid: GridState;
+  readonly wrap: Signal<boolean>;
+  readonly rowspan: Signal<number>;
+  readonly colspan: Signal<number>;
+  readonly disabled: Signal<boolean>;
+  readonly widgets: Signal<WidgetState[]>;
+  readonly widgetIndex: WritableSignal<number>;
 }
 
 let counter = -1;
 
 export class GridCellState {
-  grid: GridState;
-  wrap: Signal<boolean>;
-  rowspan: Signal<number>;
-  colspan: Signal<number>;
-  disabled: Signal<boolean>;
-  widgets: Signal<WidgetState[]>;
-  widgetIndex: WritableSignal<number>;
+  readonly grid: GridState;
+  readonly wrap: Signal<boolean>;
+  readonly rowspan: Signal<number>;
+  readonly colspan: Signal<number>;
+  readonly disabled: Signal<boolean>;
+  readonly widgets: Signal<WidgetState[]>;
+  readonly widgetIndex: WritableSignal<number>;
 
-  focusState: FocusState<WidgetState>;
-  navigationState: NavigationState<WidgetState>;
+  readonly focusState: FocusState<WidgetState>;
+  readonly navigationState: NavigationState<WidgetState>;
 
-  id = computed(() => `gridcell-${counter++}`);
-  index = computed(() => getIndex(this.grid.cells(), this.id()));
-  rowindex = computed(() => this.index().rowindex);
-  colindex = computed(() => this.index().colindex);
-  tabindex = computed(() => (this.focused() ? 0 : -1));
+  readonly id = computed(() => `gridcell-${counter++}`);
+  readonly index = computed(() => getIndex(this.grid.cells(), this.id()));
+  readonly rowindex = computed(() => this.index().rowindex);
+  readonly colindex = computed(() => this.index().colindex);
+  readonly tabindex = computed(() => (this.focused() ? 0 : -1));
 
-  inWidgetMode = computed(() => this.autofocusWidget() || this.widgetIndex() !== -1);
+  readonly inWidgetMode = computed(
+    () => this.autofocusWidget() || this.widgetIndex() !== -1,
+  );
 
-  autofocusWidget = computed(() => {
+  readonly autofocusWidget = computed(() => {
     const widget = this.widgets().at(0);
 
     return (
@@ -46,10 +49,10 @@ export class GridCellState {
     );
   });
 
-  hasNavigation = computed(() => this.widgets().length > 1);
-  isCurrent = computed(() => this.grid.currentCell() === this);
+  readonly hasNavigation = computed(() => this.widgets().length > 1);
+  readonly isCurrent = computed(() => this.grid.currentCell() === this);
 
-  active = computed(() => {
+  readonly active = computed(() => {
     return (
       !this.autofocusWidget() &&
       this.widgetIndex() === -1 &&
@@ -57,7 +60,7 @@ export class GridCellState {
     );
   });
 
-  focused = computed(() => {
+  readonly focused = computed(() => {
     return (
       !this.autofocusWidget() &&
       this.widgetIndex() === -1 &&

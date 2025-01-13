@@ -1,4 +1,11 @@
-import { computed, contentChildren, Directive, model } from '@angular/core';
+import {
+  computed,
+  contentChildren,
+  Directive,
+  ElementRef,
+  inject,
+  model,
+} from '@angular/core';
 import { ListboxState } from '../../primitives/composables/listbox/listbox';
 import { OptionState } from '../../primitives/composables/option/option';
 import { Option } from './option.directive';
@@ -16,32 +23,34 @@ import { Option } from './option.directive';
     '(mouseenter)': 'composable.load()',
     '(keydown)': 'composable.onKeyDown($event)',
     '(pointerdown)': 'composable.onPointerDown($event)',
+    '(focusout)': 'composable.onFocusout($event)',
   },
 })
 export class Listbox {
-  wrap = model.required<boolean>();
-  vertical = model.required<boolean>();
-  followFocus = model.required<boolean>();
-  rovingFocus = model.required<boolean>();
-  skipDisabled = model.required<boolean>();
-  multiselectable = model.required<boolean>();
+  readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  readonly wrap = model.required<boolean>();
+  readonly vertical = model.required<boolean>();
+  readonly followFocus = model.required<boolean>();
+  readonly rovingFocus = model.required<boolean>();
+  readonly skipDisabled = model.required<boolean>();
+  readonly multiselectable = model.required<boolean>();
 
   // This is a demonstration of how we can rename properties
   // if their meaning becomes unclear after being forwarded.
 
-  typeaheadDelay = model.required<number>();
-  typeaheadMatcher = model.required<RegExp>();
+  readonly typeaheadDelay = model.required<number>();
+  readonly typeaheadMatcher = model.required<RegExp>();
 
-  delay = this.typeaheadDelay;
-  matcher = this.typeaheadMatcher;
+  readonly delay = this.typeaheadDelay;
+  readonly matcher = this.typeaheadMatcher;
 
-  currentIndex = model.required<number>();
-  selectedIndices = model.required<number[]>();
+  readonly currentIndex = model.required<number>();
+  readonly selectedIndices = model.required<number[]>();
 
-  children = contentChildren(Option);
-  items = computed(() => this.children().map((c) => c.composable));
+  readonly children = contentChildren(Option);
+  readonly items = computed(() => this.children().map((c) => c.composable));
 
-  composable: ListboxState<OptionState>;
+  readonly composable: ListboxState<OptionState>;
 
   constructor() {
     this.composable = new ListboxState(this);

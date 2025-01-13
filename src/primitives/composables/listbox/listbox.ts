@@ -1,9 +1,9 @@
-import { NavigationState, NavigationInputs } from '../navigation/navigation';
-import { SelectionState, SelectionInputs } from '../selection/selection';
-import { FocusState, FocusInputs } from '../focus/focus';
 import { computed, Signal } from '@angular/core';
-import { TypeAheadState, TypeAheadInputs } from '../typeahead/typeahead';
+import { FocusInputs, FocusState } from '../focus/focus.state';
+import { NavigationInputs, NavigationState } from '../navigation/navigation';
 import { OptionState } from '../option/option';
+import { SelectionInputs, SelectionState } from '../selection/selection';
+import { TypeAheadInputs, TypeAheadState } from '../typeahead/typeahead';
 import { ListboxController } from './listbox.controller';
 
 export type ListboxInputs<T extends OptionState> = {
@@ -24,7 +24,7 @@ export class ListboxState<T extends OptionState> {
   tabindex: Signal<number>;
   vertical: Signal<boolean>;
   multiselectable: Signal<boolean>;
-  activedescendant: Signal<string>;
+  activedescendant: Signal<string | null>;
 
   controller: ListboxController<T> | null = null;
 
@@ -63,5 +63,10 @@ export class ListboxState<T extends OptionState> {
   async onPointerDown(event: PointerEvent) {
     const controller = await this.getController();
     controller.onPointerDown(event);
+  }
+
+  async onFocusout(event: FocusEvent) {
+    const controller = await this.getController();
+    controller.onFocusout(event);
   }
 }
